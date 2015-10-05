@@ -5,7 +5,6 @@ from socket import AF_INET
 from socket import SOCK_STREAM
 from json import dumps
 from json import loads
-from random import randint
 
 class remote_configurator():
     """Set TCP connection to send/receive configurations"""
@@ -19,12 +18,15 @@ class remote_configurator():
         """Set TCP socket"""
         self.s = socket(AF_INET, SOCK_STREAM)
 
-    def listen(self):
-        """Listen to incoming configurations"""
+    def bind(self):
+        """bind TCP connection"""
 
         self.set_socket()
         self.s.bind((self.host, self.port))
         self.s.listen(1)
+
+    def listen(self):
+        """Listen to incoming configurations"""
 
         conn, addr = self.s.accept()
         data = loads(conn.recv(self.buffer_size))
